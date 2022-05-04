@@ -7,6 +7,7 @@ import api from "./utils/api";
 
 import "normalize.css";
 import "./App.css";
+import { TestComponent } from "./components/testComponent";
 
 function App() {
   const [postsState, setPostsState] = useState([]);
@@ -48,6 +49,19 @@ function App() {
             />
           }
         />
+        <Route path='search/tag_:tag' element={
+          <PostList
+          list={postsState}
+          pagesCnt={pagesCnt}
+          favorite={favorite}
+          setFavorite={setFavorite}
+          user={user}
+          setUpdateAfterDelete={setUpdateAfterDelete}
+          login={login}
+          setPagesCnt={setPagesCnt}
+          setPostsState={setPostsState}
+        />
+        } />
       </Routes>
     </div>
   );

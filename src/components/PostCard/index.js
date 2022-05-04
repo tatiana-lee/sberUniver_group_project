@@ -20,6 +20,7 @@ import "./style.css";
 import { Timeline } from "../Timeline";
 import api from "../../utils/api.js";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { POSTSONPAGE } from "../../utils/config";
 
 export const PostCard = ({
   post,
@@ -28,8 +29,11 @@ export const PostCard = ({
   user,
   setUpdateAfterDelete,
   setPage,
+  setPostsState,
+  setPagesCnt,
+  tagSearch,
 }) => {
-  const [likeCount, setLikeCount] = useState(post.likes.length);
+  const [likeCount, setLikeCount] = useState(post.likes.length);  
 
   const writeLS = (key, value) => {
     const storage = JSON.parse(localStorage.getItem(key)) || [];
@@ -88,6 +92,7 @@ export const PostCard = ({
     }
   };
 
+
   require("dayjs/locale/ru");
   return (
     <CardMUI sx={{ maxWidth: 345 }} key={uuidv4()}>
@@ -123,14 +128,20 @@ export const PostCard = ({
           Tags:
           {post.tags.map((el) => {
             return (
+              <Link to={`/search/tag_${el}`}
+                key={uuidv4()}
+              >
               <Button
                 variant="outlined"
                 size="small"
                 sx={{ ml: "10px" }}
-                key={uuidv4()}
-              >
+                onClick={()=>{
+                  tagSearch(el);
+                }}
+                >
                 {el}
               </Button>
+                </Link>
             );
           })}
         </Typography>
