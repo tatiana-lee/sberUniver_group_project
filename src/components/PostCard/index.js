@@ -1,5 +1,6 @@
-// import React from "react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import { Card as CardMUI } from "@mui/material";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -7,41 +8,34 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-
-import { Link } from "react-router-dom";
-
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Button from "@mui/material/Button";
-import * as dayjs from "dayjs";
-import { v4 as uuidv4 } from "uuid";
-import "./style.css";
-import { Timeline } from "../Timeline";
-import api from "../../utils/api.js";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+
+import { v4 as uuidv4 } from "uuid";
+import * as dayjs from "dayjs";
+import cn from "classnames";
+
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import ModalContext from "../../contexts/modalContext";
+import styles from "./style.module.css";
+import api from "../../utils/api.js";
+
+import { Timeline } from "../Timeline";
 
 export const PostCard = ({
   post,
   isInFavorite,
   setFavorite,
   user,
-  setUpdateAfterDelete,
   setPage,
-}) => {
+}) => {    
+  const { writeLS, removeLS } = useLocalStorage();
   const [likeCount, setLikeCount] = useState(post.likes.length);
 
-  const writeLS = (key, value) => {
-    const storage = JSON.parse(localStorage.getItem(key)) || [];
-    storage.push(value);
-    localStorage.setItem(key, JSON.stringify(storage));
-  };
-
-  const removeLS = (key, value) => {
-    const storage = JSON.parse(localStorage.getItem(key));
-    const filteredStorage = storage.filter((itemID) => value !== itemID);
-    localStorage.setItem(key, JSON.stringify(filteredStorage));
-  };
+  const { setModalState } = useContext(ModalContext);
 
   const addFavorite = () => {
     writeLS("favorite", post._id);
@@ -50,10 +44,17 @@ export const PostCard = ({
       .addLike(post._id)
       .then((addedItem) => {
         setLikeCount((prevState) => prevState + 1);
-        alert(`${addedItem.title} добавлен в избранные`);
+        setModalState(() => {
+          return {
+            isOpen: true,
+            msg: `"${addedItem.title}" добавлен в избраное`,
+          };
+        });
       })
       .catch(() => {
-        alert(`Не удалось добавить в избранные`);
+        setModalState(() => {
+          return { isOpen: true, msg: `Не удалось добавить "${post.title}" в избранное` };
+        });
       });
   };
   const removeFavorite = () => {
@@ -65,10 +66,20 @@ export const PostCard = ({
       .removeLike(post._id)
       .then((removedItem) => {
         setLikeCount((prevState) => prevState - 1);
-        alert(`${removedItem.title} удален из избранного`);
+        setModalState(() => {
+          return {
+            isOpen: true,
+            msg: `"${removedItem.title}" удален из избранного`,
+          };
+        });
       })
       .catch(() => {
-        alert(`Не удалось удалить из избранного`);
+        setModalState(() => {
+          return {
+            isOpen: true,
+            msg: `Не удалось удалить из избранного`,
+          };
+        });
       });
   };
 
@@ -76,15 +87,24 @@ export const PostCard = ({
     if (user?._id === post?.author._id) {
       api.deletePost(post._id).then((res) => {
         if (res.ok) {
-          alert("пост удален");
           setPage(1);
-          return setUpdateAfterDelete(true);
+          setModalState(() => {
+            return {
+              isOpen: true,
+              msg: `"${post.title}" удален`,
+            };
+          });
         } else {
           return Promise.reject(`Ошибка : ${res.status}`);
         }
       });
     } else {
-      alert("Вы не автор этого поста. Удаление невозвожно!");
+      setModalState(() => {
+        return {
+          isOpen: true,
+          msg: `Вы не автор этого поста. Удаление невозвожно!`,
+        };
+      });
     }
   };
 
@@ -106,7 +126,11 @@ export const PostCard = ({
             </IconButton>
           ) : null
         }
-        title={<Link to={`/post/${post._id}`}>{post.title}</Link>}
+        title={
+          <Link to={`/post/${post._id}`} className={cn(styles.headerTitle)}>
+            {post.title}
+          </Link>
+        }
         subheader={dayjs(post.created_at).locale("ru").format("DD MMMM YYYY")}
       />
       <CardMedia
