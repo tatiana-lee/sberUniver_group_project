@@ -87,7 +87,24 @@ class Api {
       },
     }).then(onResponce);
   }
+    search(searchQuery) {
+        return fetch(`${this._url}/posts/search/?query=${searchQuery}`, {
+          method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        }).then(onResponce);
+    }
 
+    addLike(itemID) {
+        return fetch(`${this._url}/posts/likes/${itemID}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        }).then(onResponce);
+    }
+    
   deletePost(postID) {
     return fetch(`${this._url}/posts/${postID}`, {
       method: "DELETE",
