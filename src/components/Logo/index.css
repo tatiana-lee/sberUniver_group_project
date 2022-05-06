@@ -1,0 +1,9 @@
+.logoImg {
+    width: 150px;
+    height: 70px;
+    background-image: url('https://www.nicepng.com/png/full/83-837968_batman-dark-knight-logo-white.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    cursor: pointer;
+}

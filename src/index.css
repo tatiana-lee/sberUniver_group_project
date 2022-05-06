@@ -1,17 +1,21 @@
-#root {
-    width: 100%;
-  }
-  .appContainer {
+/* @import '../node_modules/normalize.css/normalize.css'; */
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+* {
+    box-sizing: inherit;
+}
+html {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Oswald', sans-serif;
+    background-color: #22254b;
+    background-repeat: no-repeat;
+}
+
+.appContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     height: 100vh;
-  }
-  
-  .sectionInner {
-    max-width: 1024px;
-    width: 100%;
-    margin: 0 auto;
-  }
- 
+}

@@ -1,0 +1,17 @@
+.footer {
+    width: 101.1%;
+    height: 100px;
+    background-color: #373b69;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 0;
+    margin: 30px 0 -10px 0;
+}
+
+.footer__container {
+    line-height: 12px;
+    color: #fff;
+    /* display: flex;
+    justify-content: center; */
+    text-align: center;
+}

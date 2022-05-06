@@ -1,111 +1,123 @@
-import { config } from './config';
+import { config } from './config'
 
-const onResponce = (res) => {
-    return res.ok ? res.json() : Promise.reject(`Ошибка : ${res.status}`);
-};
+const onResponse = (res) => {
+    return res.ok ? res.json() : Promise.reject(`Ошибка : ${res.status}`)
+}
+
 class Api {
-    constructor({ url, token }) {
+    constructor({url, token}) {
         this._url = url;
-        // this._token = token;
+        this._token  = token;
     }
 
-    getPosts(itemID) {
-        const requestUrl = itemID ? `${this._url}/posts/${itemID}` : `${this._url}/posts`;
+    getPosts(postID) {
+        const requestUrl = postID ? `${this._url}/posts/${postID}` : `${this._url}/posts/`
         return fetch(requestUrl, {
             headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
+                authorization: `Bearer ${this._token}`,
             },
-        }).then(onResponce);
+        }).then(onResponse)
     }
-    addPosts(post) {
+
+    addPost(post) {
         return fetch(`${this._url}/posts`, {
             method: 'POST',
             headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json',
+                authorization: `Bearer ${this._token}`,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(post),
-        }).then(onResponce);
-    }
-    getPostsOnPage(pageNumber, postsOnPage) {
-        return fetch(`${this._url}/posts/paginate?page=${pageNumber}&limit=${postsOnPage}`, {
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-        }).then(onResponce);
-
-    }
-
-    getUserInfo(userID) {
-        return fetch(`${this._url}/users/${userID}`, {
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-        }).then(onResponce);
-    }
-    getMeInfo() {
-        return fetch(`${this._url}/users/me`, {
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-        }).then(onResponce);
-    }
-
-    updateUserInfo() {
-        return fetch(`${this._url}/users/me`, {
-        method: 'PATCH',
-        headers: {
-            authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: 'Сергей Сапелко',
-            about: ''
         })
-        });
+        .then(onResponse)
+    }
+
+    deletePost(postID) {
+        return fetch(`${this._url}/posts/${postID}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `Bearer ${this._token}`,
+            },
+        }).then(onResponse)
+    }
+
+    editPost(postID, editedPost) {
+        return fetch(`${this._url}/posts/${postID}`, {
+            method: 'PATCH',
+            headers: {
+                authorization: `Bearer ${this._token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(editedPost),
+        }).then(onResponse)
+    }
+
+    getCurrentUser() {
+        return fetch(`${this._url}/users/me`, {
+            headers: {
+                authorization: `Bearer ${this._token}`,
+            },
+        }).then(onResponse)
+    }
+
+    getUserById(userID) {
+        const requestUrl = userID ? `${this._url}/users/${userID}` : `${this._url}/users/`
+        return fetch(requestUrl, {
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${this._token}`,
+            },
+        }).then(onResponse)
+    }
+
+    editCurentUser(updatedUserInfo) {
+        return fetch(`${this._url}/users/me`, {
+            method: 'PATCH',
+            headers: {
+                authorization: `Bearer ${this._token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedUserInfo),
+        }).then(onResponse);
+    }
+
+    signUp(userData) {
+        return fetch(`${this._url}/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        }).then(onResponse);
+    }
+
+    signIn(userData) {
+        return fetch(`${this._url}/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        }).then(onResponse);
     }
 
     addLike(itemID) {
         return fetch(`${this._url}/posts/likes/${itemID}`, {
             method: 'PUT',
             headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
+                authorization: `Bearer ${this._token}`,
             },
-        }).then(onResponce);
+        }).then(onResponse)
     }
-    
-    removeLike(itemID) {
+
+    deleteLike(itemID) {
         return fetch(`${this._url}/posts/likes/${itemID}`, {
             method: 'DELETE',
             headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
+                authorization: `Bearer ${this._token}`,
             },
-        }).then(onResponce);
+        }).then(onResponse)
     }
-
-    deletePost(postID){
-        return fetch(`${this._url}/posts/${postID}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-        })
-    }
-
-    // getMyFavorite(userID) {
-    //     let myFavorite = [];
-       
-    //     this.getPosts().then((data)=>{
-    //        data.forEach((el)=>{
-    //            console.log(el);
-    //            if (el.likes.includes(userID)){
-    //             myFavorite.push(el._id)
-    //            }
-    //         })
-    //         return myFavorite;
-    //     })
-    // }
 
 }
 
-export default new Api(config);
+export default new Api(config)
