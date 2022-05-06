@@ -1,0 +1,28 @@
+.cardListContainer {
+  display        : flex;
+  flex-direction : column;
+  align-items    : center;
+  justify-content: center;
+  margin         : 0 0 20px 0;
+}
+
+.gridTable {
+  margin               : 0 auto;
+  display              : grid;
+  grid-template-columns: repeat(3, 320px);
+  gap                  : 30px;
+  margin               : 0 0 20px 0;
+}
+
+@media screen and (max-width: 1024px){
+  .gridTable {
+    grid-template-columns: repeat(2, 320px);
+  }
+  
+}
+@media screen and (max-width: 670px){
+  .gridTable {
+    grid-template-columns: repeat(1, 320px);
+  }
+  
+}

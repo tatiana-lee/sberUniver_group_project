@@ -1,0 +1,3 @@
+.TimelineItemClass:before {
+    content: none !important;
+}
