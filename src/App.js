@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
 import { PostList } from "./components/PostList";
+import Modal from "./components/Modal";
+import ModalContext from "./contexts/modalContext";
 
 import api from "./utils/api";
 
@@ -12,7 +14,6 @@ function App() {
   const [postsState, setPostsState] = useState([]);
   const [pagesCnt, setPagesCnt] = useState(1);
   const [login, setLogin] = useState(true);
-  const [updateAfterDelete, setUpdateAfterDelete] = useState(false);
   const [user, setUser] = useState(null);
   const [favorite, setFavorite] = useState([]);
 
@@ -29,27 +30,34 @@ function App() {
     }
   }, [login]);
 
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    msg: null,
+  });
+
   return (
-    <div className="appContainer">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PostList
-              list={postsState}
-              pagesCnt={pagesCnt}
-              favorite={favorite}
-              setFavorite={setFavorite}
-              user={user}
-              setUpdateAfterDelete={setUpdateAfterDelete}
-              login={login}
-              setPagesCnt={setPagesCnt}
-              setPostsState={setPostsState}
-            />
-          }
-        />
-      </Routes>
-    </div>
+    <ModalContext.Provider value={{ modalState, setModalState }}>
+      <Modal />
+      <div className="appContainer">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PostList
+                list={postsState}
+                pagesCnt={pagesCnt}
+                favorite={favorite}
+                setFavorite={setFavorite}
+                user={user}
+                login={login}
+                setPagesCnt={setPagesCnt}
+                setPostsState={setPostsState}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </ModalContext.Provider>
   );
 }
 
