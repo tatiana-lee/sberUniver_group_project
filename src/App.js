@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
+import { Post } from './components/Post'
 import { PostList } from "./components/PostList";
 import Modal from "./components/Modal";
 import ModalContext from "./contexts/modalContext";
@@ -75,6 +76,7 @@ function App() {
               />
             }
           />
+          <Route path='posts/:postID' element={<Post />}/>
         </Routes>
         <Footer>
       <Logo />
