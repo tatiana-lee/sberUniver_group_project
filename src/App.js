@@ -25,6 +25,8 @@ function App() {
   const [login, setLogin] = useState(true);
   const [user, setUser] = useState(null);
   const [favorite, setFavorite] = useState([]);
+  const [searchQuery, setSearchQuery] = useState([]);
+
 
   const handleChangeSearchInput = (value) => {
     setSearchQuery(value);
@@ -53,10 +55,10 @@ function App() {
       <Modal />
       <div className="appContainer">
       <Header>
-        <Logo />
-        <Search setQuery={handleChangeSearchInput} />
-        <Info user={user} />
-      </Header> 
+      <Logo />
+      <Search setQuery={handleChangeSearchInput} />
+      <Info user={user} />
+    </Header> 
         <Routes>
           <Route
             path="/"
@@ -74,6 +76,12 @@ function App() {
             }
           />
         </Routes>
+        <Footer>
+      <Logo />
+    </Footer>
       </div>
     </ModalContext.Provider>
   );
+}
+
+export default App;
