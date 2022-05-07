@@ -1,131 +1,115 @@
-import React from 'react'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardMedia from '@mui/material/CardMedia'
-import CardContent from '@mui/material/CardContent'
-import Avatar from '@mui/material/Avatar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import { red } from '@mui/material/colors'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import SendIcon from '@mui/icons-material/Send'
-import { Chip, Grid, TextField } from '@mui/material'
+import {
+    Grid,
+    Typography,
+    Card,
+    CardMedia,
+    CardContent,
+    CardHeader,
+    Avatar,
+    Stack,
+} from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import api from '../../utils/api'
+import { DeleteButton } from '../DeleteButton'
+import { GoBackButton } from '../GoBackButton'
+import { EditButton } from '../EditButton'
 
-export const Post = () => {
+export const Post = ({setPostList}) => {
+    const [post, setPost] = useState(null)
+    const [commentAuthor, setCommentAuthor] = useState(null)
+    const [user, setUser] = useState(null)
+    const params = useParams()
+
+    useEffect(() => {
+        api.getPosts(params.postID)
+            .then((data) => {
+                setPost(data)
+            })
+            .catch((err) => console.log(err))
+    }, [])
+
+    useEffect(() => {
+        api.getUserById(params.userID)
+            .then((data) => {
+                setCommentAuthor(data)
+            })
+            .catch((err) => console.log(err))
+    }, [])
+
+    useEffect(() => {
+        api.getCurrentUser()
+            .then((user) => setUser(user))
+            .catch((err) => console.log(err))
+    }, [])
+
     return (
-        <Card sx={{ maxWidth: 1024 }}>
-            <Grid item container xs={12} flexDirection="row">
-                <Grid item xs={8}>
-                    <Grid item container xs={12}>
+        <div className="postInfo">
+            <GoBackButton />
+            {post && (
+                <Card>
+                    <Grid
+                        container
+                        item
+                        xs={12}
+                        flexDirection="row"
+                        spacing={1}
+                    >
                         <Grid item xs={10}>
                             <CardHeader
                                 avatar={
                                     <Avatar
-                                        sx={{ bgcolor: red[500] }}
-                                        aria-label="recipe"
-                                    >
-                                        R
-                                    </Avatar>
+                                        alt="avatar"
+                                        src={post.author.avatar}
+                                    />
                                 }
-                                title="author.name"
-                                subheader="author.about"
+                                title={post.author.name}
+                                subheader={post.author.about}
                             />
                         </Grid>
-                        <Grid item xs={2}>
-                            <IconButton>
-                                <EditIcon />
-                            </IconButton>
-                            <IconButton>
-                                <DeleteIcon />
-                            </IconButton>
+                        <Grid
+                            container
+                            item
+                            xs={2}
+                            justifyContent="flex-end"
+                            alignItems="center"
+                            spacing={1}
+                            paddingRight="10px"
+                        >
+                            {post.author._id === user?._id ? (
+                                <Stack direction="row">
+                                    <EditButton />
+                                    <DeleteButton setPostList={setPostList}/>
+                                </Stack>
+                            ) : (
+                                <></>
+                            )}
                         </Grid>
                     </Grid>
                     <CardMedia
                         component="img"
+                        alt="post photo"
                         height="500"
-                        image=""
-                        alt="postimage"
-                    />
-                    <Grid item container xs={12}>
-                        <Grid item xs={10} spacing={2}>
-                        
-
-                            <Chip label="#tags" variant="outlined" />
-                            <Chip label="#tags" variant="outlined" />
-                            <Chip label="#tags" variant="outlined" />
-                        
-                        </Grid>
-                        <Grid item xs={2}>
-                            created date
-                        </Grid>
-                    </Grid>
-                    ---
+                        width="500"
+                        image={post.image}
+                    ></CardMedia>
                     <CardContent>
-                        <Typography variant="h6">post.title</Typography>
-                        <Typography paragraph>post.text</Typography>
+                        <Typography>Заголовок: {post.title}</Typography>
+                        <Typography>Описание: {post.text}</Typography>
+                        {/* <Grid item> */}
+                        Комментарии:
+                        {post.comments?.map((e, i) => (
+                            <Typography key={i}>
+                                {commentAuthor?.map((user) =>
+                                    user._id === e.author ? user.name : ''
+                                )}
+                                : {e.text}
+                            </Typography>
+                        ))}
+                        {/* </Grid> */}
                     </CardContent>
-                </Grid>
-
-                <Grid item container xs={4} flexDirection="column">
-                    <Typography>comments</Typography>
-                    <Grid item container flexDirection="column" height="600px">
-                        <CardHeader
-                            avatar={
-                                <Avatar
-                                    sx={{ bgcolor: red[500] }}
-                                    aria-label="recipe"
-                                >
-                                    R
-                                </Avatar>
-                            }
-                            title="author.name"
-                            subheader="author.about"
-                        />
-                        <CardHeader
-                            avatar={
-                                <Avatar
-                                    sx={{ bgcolor: red[500] }}
-                                    aria-label="recipe"
-                                >
-                                    R
-                                </Avatar>
-                            }
-                            title="author.name"
-                            subheader="author.about"
-                        />
-                        <CardHeader
-                            avatar={
-                                <Avatar
-                                    sx={{ bgcolor: red[500] }}
-                                    aria-label="recipe"
-                                >
-                                    R
-                                </Avatar>
-                            }
-                            title="author.name"
-                            subheader="author.about"
-                        />
-                    </Grid>
-
-                    <Grid item container>
-                    <Grid item>
-
-                        <TextField
-                            id="filled-basic"
-                            label="Добавить комментарий"
-                            variant="standard"
-                        />
-                    </Grid>
-                    <Grid item>
-
-                        <IconButton>
-                            <SendIcon />
-                        </IconButton>
-                    </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Card>
+                </Card>
+            )}
+        </div>
     )
 }

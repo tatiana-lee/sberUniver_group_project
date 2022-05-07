@@ -127,6 +127,35 @@ class Api {
   //         return myFavorite;
   //     })
   // }
+
+  getCurrentUser() {
+    return fetch(`${this._url}/users/me`, {
+        headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    }).then(onResponce)
+}
+
+getUserById(userID) {
+    const requestUrl = userID ? `${this._url}/users/${userID}` : `${this._url}/users/`
+    return fetch(requestUrl, {
+        method: 'GET',
+        headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    }).then(onResponce)
+}
+
+editCurentUser(updatedUserInfo) {
+    return fetch(`${this._url}/users/me`, {
+        method: 'PATCH',
+        headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUserInfo),
+    }).then(onResponce);
+}
 }
 
 export default new Api(config);

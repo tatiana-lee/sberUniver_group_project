@@ -76,7 +76,7 @@ function App() {
               />
             }
           />
-          <Route path='posts/:postID' element={<Post />}/>
+          <Route path='post/:postID' element={<Post />}/>
         </Routes>
         <Footer>
       <Logo />
