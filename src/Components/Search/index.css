@@ -32,6 +32,7 @@
 	cursor: pointer;
 	position: absolute;
 	right: 20px;
+	top: calc(50% - 12px);
 	display: flex;
 }
 .search__btn svg {
