@@ -22,6 +22,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import ModalContext from "../../contexts/modalContext";
 import styles from "./style.module.css";
 import api from "../../utils/api.js";
+import { POSTSONPAGE } from "../../utils/config";
 
 import { Timeline } from "../Timeline";
 
@@ -31,6 +32,7 @@ export const PostCard = ({
   setFavorite,
   user,
   setPage,
+  tagSearch,
 }) => {    
   const { writeLS, removeLS } = useLocalStorage();
   const [likeCount, setLikeCount] = useState(post.likes.length);
@@ -108,6 +110,7 @@ export const PostCard = ({
     }
   };
 
+
   require("dayjs/locale/ru");
   return (
     <CardMUI sx={{ maxWidth: 345 }} key={uuidv4()}>
@@ -147,14 +150,20 @@ export const PostCard = ({
           Tags:
           {post.tags.map((el) => {
             return (
+              <Link to={`/search/tag_${el}`}
+                key={uuidv4()}
+              >
               <Button
                 variant="outlined"
                 size="small"
                 sx={{ ml: "10px" }}
-                key={uuidv4()}
-              >
+                onClick={()=>{
+                  tagSearch(el);
+                }}
+                >
                 {el}
               </Button>
+                </Link>
             );
           })}
         </Typography>
