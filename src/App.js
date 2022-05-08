@@ -92,7 +92,6 @@ function App() {
                 favorite={favorite}
                 setFavorite={setFavorite}
                 user={user}
-                setUpdateAfterDelete={setUpdateAfterDelete}
                 login={login}
                 setPagesCnt={setPagesCnt}
                 setPostsState={setPostsState}
