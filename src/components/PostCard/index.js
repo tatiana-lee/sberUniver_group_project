@@ -32,6 +32,7 @@ export const PostCard = ({
   setFavorite,
   user,
   setPage,
+  tagSearch,
 }) => {    
   const { writeLS, removeLS } = useLocalStorage();
   const [likeCount, setLikeCount] = useState(post.likes.length);
