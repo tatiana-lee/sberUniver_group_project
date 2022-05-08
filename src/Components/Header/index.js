@@ -1,7 +1,4 @@
 import React from "react";
-// import Logo from '../Logo';
-// import Info from '../Info';
-// import { Search } from '../Search';
 
 import style from "./style.module.css";
 
