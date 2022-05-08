@@ -7,6 +7,8 @@ import {
     CardHeader,
     Avatar,
     Stack,
+    TextField,
+    IconButton,
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -14,12 +16,31 @@ import api from '../../utils/api'
 import { DeleteButton } from '../DeleteButton'
 import { GoBackButton } from '../GoBackButton'
 import { EditButton } from '../EditButton'
+import SendIcon from '@mui/icons-material/Send'
+import CloseIcon from '@mui/icons-material/Close'
+import FormControl, { useFormControl } from '@mui/material/FormControl'
 
-export const Post = ({setPostList}) => {
+export const Post = ({ setPostList }) => {
     const [post, setPost] = useState(null)
     const [commentAuthor, setCommentAuthor] = useState(null)
     const [user, setUser] = useState(null)
     const params = useParams()
+
+    const handleAddComment = (event) => {
+        event.preventDefault()
+        const {
+            target: { text },
+        } = event
+        api.addComment(params.postID, { text: text.value.trim() })
+            .then((data) => {
+                alert('Комментарий добавлен')
+                api.getPosts(params.postID).then((data) => setPost(data))
+                text.value = ''
+            })
+            .catch((err) => {
+                alert(err + ' - Не удалось добавить комментарий')
+            })
+    }
 
     useEffect(() => {
         api.getPosts(params.postID)
@@ -30,7 +51,7 @@ export const Post = ({setPostList}) => {
     }, [])
 
     useEffect(() => {
-        api.getUserById(params.userID)
+        api.getUserInfo(params.userID)
             .then((data) => {
                 setCommentAuthor(data)
             })
@@ -38,7 +59,7 @@ export const Post = ({setPostList}) => {
     }, [])
 
     useEffect(() => {
-        api.getCurrentUser()
+        api.getMeInfo()
             .then((user) => setUser(user))
             .catch((err) => console.log(err))
     }, [])
@@ -79,7 +100,7 @@ export const Post = ({setPostList}) => {
                             {post.author._id === user?._id ? (
                                 <Stack direction="row">
                                     <EditButton />
-                                    <DeleteButton setPostList={setPostList}/>
+                                    <DeleteButton setPostList={setPostList} />
                                 </Stack>
                             ) : (
                                 <></>
@@ -94,19 +115,70 @@ export const Post = ({setPostList}) => {
                         image={post.image}
                     ></CardMedia>
                     <CardContent>
-                        <Typography>Заголовок: {post.title}</Typography>
-                        <Typography>Описание: {post.text}</Typography>
+                        <Typography variant="h6">{post.title}</Typography>
+                        <Typography variant="body2">{post.text}</Typography>
                         {/* <Grid item> */}
+                        <br />
                         Комментарии:
-                        {post.comments?.map((e, i) => (
-                            <Typography key={i}>
-                                {commentAuthor?.map((user) =>
-                                    user._id === e.author ? user.name : ''
-                                )}
-                                : {e.text}
-                            </Typography>
-                        ))}
-                        {/* </Grid> */}
+                        <Grid item height="200px" overflow="scroll">
+                            {post?.comments?.map((e, i) =>
+                                commentAuthor?.map((user) =>
+                                    user._id === e.author ? (
+                                        <Grid item key={i} container>
+                                            <Grid item xs={11}>
+                                                <CardHeader
+                                                    style={{ padding: '5px' }}
+                                                    avatar={
+                                                        <Avatar
+                                                            alt="avatar"
+                                                            src={user.avatar}
+                                                        ></Avatar>
+                                                    }
+                                                    title={user.name}
+                                                    subheader={e.text}
+                                                />
+                                            </Grid>
+                                            {post.author._id === e.author ? (
+                                                <Grid item xs={1}>
+                                                    <IconButton>
+                                                        <CloseIcon />
+                                                    </IconButton>
+                                                </Grid>
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </Grid>
+                                    ) : (
+                                        ''
+                                    )
+                                )
+                            )}
+                        </Grid>
+                            <form sx={{ width: '100%' }} onSubmit={handleAddComment}>
+                        <Grid
+                            item
+                            container
+                            flexDirection="row"
+                            justifyContent="center"
+                            alignItems="center"
+                        >
+                                <Grid item xs={11}>
+                                    <TextField
+                                        id="filled-basic"
+                                        name="text"
+                                        fullWidth
+                                        label="Добавить комментарий"
+                                        variant="standard"
+                                        required
+                                    />
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <IconButton type="submit">
+                                        <SendIcon />
+                                    </IconButton>
+                                </Grid>
+                        </Grid>
+                            </form>
                     </CardContent>
                 </Card>
             )}
