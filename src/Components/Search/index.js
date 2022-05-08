@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './index.css';
-import { ReactComponent as CloseSearch } from '../../../public/assets/ic-search.svg';
+import { Link } from "react-router-dom";
 
-export const Search = ({ setQuery }) => {
+import { ReactComponent as CloseSearch } from '../../../public/assets/ic-search.svg';
+import './index.css';
+import api from '../../utils/api';
+
+export const Search = ({ setQuery, setPostsState }) => {
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
@@ -10,6 +13,13 @@ export const Search = ({ setQuery }) => {
     }, [searchText]);
 
     const handleClick = () => {
+        api.search(searchText)
+        .then((data)=>{
+            setPostsState(data);
+        })
+        .catch((err) => {
+            alert(err);
+          });
         setSearchText('');
     };
 
@@ -26,7 +36,9 @@ export const Search = ({ setQuery }) => {
                 value={searchText} 
                 onChange={handleChange}
             />
+            <Link to={`/search/title_${searchText}`}>
             <button className='search__btn'>{searchText && <CloseSearch onClick={handleClick} />}</button>
+              </Link>
         </div>
   )
 }
