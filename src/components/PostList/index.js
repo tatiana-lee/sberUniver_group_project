@@ -57,7 +57,6 @@ export const PostList = ({
             }
           })
         });
-        setPagesCnt(Math.ceil(postWithTag.length/POSTSONPAGE));
         setPostsState(postWithTag);
         /*======================================================*/
       })
@@ -86,12 +85,10 @@ export const PostList = ({
            tagSearch={tagSearch}
            />
            ))}
-
-          <Link to='/'>
-            <Button onClick={sliceList(1)}> НАЗАД</Button>
-          </Link>
-
        </div>
+          <Link to='/'>
+            <Button onClick={()=>sliceList(1)}> НАЗАД</Button>
+          </Link>
            </>
          :
       <>
@@ -107,7 +104,6 @@ export const PostList = ({
           setPage={setPage}
           setPostsState={setPostsState}
           setPagesCnt={setPagesCnt}
-
           tagSearch={tagSearch}
           />
           ))}
