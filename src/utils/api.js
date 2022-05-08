@@ -30,6 +30,18 @@ class Api {
       body: JSON.stringify(post),
     }).then(onResponce);
   }
+
+  editPost(postID, editedPost) {
+    return fetch(`${this._url}/posts/${postID}`, {
+        method: 'PATCH',
+        headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedPost),
+    }).then(onResponce)
+}
+
   getPostsOnPage(pageNumber, postsOnPage) {
     return fetch(
       `${this._url}/posts/paginate?page=${pageNumber}&limit=${postsOnPage}`,
@@ -42,7 +54,8 @@ class Api {
   }
 
   getUserInfo(userID) {
-    return fetch(`${this._url}/users/${userID}`, {
+    const requestUrl = userID ? `${this._url}/users/${userID}` : `${this._url}/users/`
+    return fetch(requestUrl, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -127,35 +140,16 @@ class Api {
   //         return myFavorite;
   //     })
   // }
-
-  getCurrentUser() {
-    return fetch(`${this._url}/users/me`, {
-        headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-    }).then(onResponce)
-}
-
-getUserById(userID) {
-    const requestUrl = userID ? `${this._url}/users/${userID}` : `${this._url}/users/`
-    return fetch(requestUrl, {
-        method: 'GET',
-        headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-    }).then(onResponce)
-}
-
-editCurentUser(updatedUserInfo) {
-    return fetch(`${this._url}/users/me`, {
-        method: 'PATCH',
-        headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedUserInfo),
+  addComment(postID, comment) {
+    return fetch(`${this._url}/posts/comments/${postID}`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(comment),
     }).then(onResponce);
-}
+  }
 }
 
 export default new Api(config);
