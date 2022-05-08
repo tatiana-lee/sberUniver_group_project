@@ -14,7 +14,6 @@ export const PostList = ({
   favorite,
   setFavorite,
   user,
-  setUpdateAfterDelete,
   login,
   setPagesCnt,
   setPostsState,
@@ -33,6 +32,12 @@ export const PostList = ({
       .then((data) => {
         setPagesCnt(Math.ceil(data.total / POSTSONPAGE));
         setPostsState(data.posts);
+        localStorage.setItem('userID', '624f266aae19f546dc083a51') // TODO: поправить временно захардкоженый userID. Сейчас необходим для корректной отработки лайков
+        data.posts.forEach((el)=>{
+          if (el.likes.includes(localStorage.getItem('userID'))){
+            setFavorite((prevState)=>[...prevState, el._id])
+          }
+       })
       })
       .catch((err) => {
         alert(err);

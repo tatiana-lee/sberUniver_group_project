@@ -1,0 +1,17 @@
+.footer {
+    width: 100%;
+    padding: 10px 0;
+    background-color: bisque;
+}
+
+.footer_wrapper {
+    display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 50px;
+}
+
+.button_wrapper {
+    display: flex;
+    align-items: center;
+}
