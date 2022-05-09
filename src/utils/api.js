@@ -158,6 +158,27 @@ signIn(userData) {
     }).then(onResponce);
 }
 
+editCurentUser(updatedUserInfo) {
+  return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedUserInfo),
+  }).then(onResponce);
+}
+editCurentUserAvatar(updatedUserInfo) {
+  return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedUserInfo),
+  }).then(onResponce);
+}
+
 }
 
 export default new Api(config);
