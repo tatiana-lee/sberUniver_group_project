@@ -54,8 +54,8 @@ function App() {
       <div className="appContainer">
         <Header>
           <Logo />
-          <Search setQuery={handleChangeSearchInput} setPostsState={setPostsState}/>
-          <Info user={user} />
+          <Search setQuery={handleChangeSearchInput}/>
+          <Info user={user} setPostsState={setPostsState} setFavorite={setFavorite}/>
         </Header>
         <NewPostButton />
         <Routes>
@@ -100,6 +100,36 @@ function App() {
           />
           <Route
             path="search/title_:title"
+            element={
+              <PostList
+                list={postsState}
+                pagesCnt={pagesCnt}
+                favorite={favorite}
+                setFavorite={setFavorite}
+                user={user}
+                login={login}
+                setPagesCnt={setPagesCnt}
+                setPostsState={setPostsState}
+              />
+            }
+          />
+          <Route
+            path="post/my_:posts"
+            element={
+              <PostList
+                list={postsState}
+                pagesCnt={pagesCnt}
+                favorite={favorite}
+                setFavorite={setFavorite}
+                user={user}
+                login={login}
+                setPagesCnt={setPagesCnt}
+                setPostsState={setPostsState}
+              />
+            }
+          />
+          <Route
+            path="post/my_:favorite"
             element={
               <PostList
                 list={postsState}
