@@ -7,7 +7,7 @@ class Api {
   constructor({ url, token }) {
     this._url = url;
     // this._token = token;
-    localStorage.setItem("token", token);
+    // localStorage.setItem("token", token);
   }
 
   getPosts(itemID) {
@@ -127,19 +127,6 @@ class Api {
     });
   }
 
-  // getMyFavorite(userID) {
-  //     let myFavorite = [];
-
-  //     this.getPosts().then((data)=>{
-  //        data.forEach((el)=>{
-  //            console.log(el);
-  //            if (el.likes.includes(userID)){
-  //             myFavorite.push(el._id)
-  //            }
-  //         })
-  //         return myFavorite;
-  //     })
-  // }
   addComment(postID, comment) {
     return fetch(`${this._url}/posts/comments/${postID}`, {
       method: "POST",
@@ -150,6 +137,27 @@ class Api {
       body: JSON.stringify(comment),
     }).then(onResponce);
   }
+
+  signUp(userData) {
+    return fetch(`${this._url}/signup`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+    }).then(onResponce);
+}
+
+signIn(userData) {
+    return fetch(`${this._url}/signin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+    }).then(onResponce);
+}
+
 }
 
 export default new Api(config);

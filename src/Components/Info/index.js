@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useContext } from 'react';
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -16,10 +16,12 @@ import { Link } from "@mui/material";
 import { Link as LinkRoute } from "react-router-dom";
 import api from "../../utils/api";
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import UserContext from '../../contexts/UserContext.js';
 
 export default function Info({ user, setPostsState, setFavorite}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+    const { login, setLogin } = useContext(UserContext);
 
 
 const { writeLS, removeLS } = useLocalStorage();
@@ -85,7 +87,15 @@ const { writeLS, removeLS } = useLocalStorage();
       });
   };
 
+  const logoutFunc = () => {
+    console.log("Click LogoutBtn!");
+    localStorage.setItem("token", "");
+    localStorage.setItem("userID", "");
+    setLogin(false);
+  };
+
   return (
+    login ?
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Link
@@ -96,6 +106,7 @@ const { writeLS, removeLS } = useLocalStorage();
             <GitHubIcon />
           </IconButton>
         </Link>
+
         <LinkRoute to={`/post/my_posts`}>
           <IconButton onClick={()=>myPosts()} size="small" sx={{ ml: 2 }}>
             <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
@@ -115,7 +126,9 @@ const { writeLS, removeLS } = useLocalStorage();
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>U</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>
+            {user?.name.slice(0, 1)}
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -165,13 +178,29 @@ const { writeLS, removeLS } = useLocalStorage();
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={logoutFunc}>
+          <LinkRoute to={'/'}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
           Logout
+          </LinkRoute>
         </MenuItem>
       </Menu>
+
     </React.Fragment>
+    : 
+    
+    <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+        <Link
+          href="https://github.com/sopel1996/sberUniver_group_project"
+          sx={{ mr: "10px" }}
+        >
+          <IconButton aria-label="GitHub">
+            <GitHubIcon />
+          </IconButton>
+        </Link>
+    </Box>
+
   );
 }

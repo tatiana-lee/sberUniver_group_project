@@ -7,6 +7,7 @@ import api from "../../utils/api.js";
 import { POSTSONPAGE } from "../../utils/config";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
+import { GoBackButton } from "../GoBackButton";
 
 export const PostList = ({
   list,
@@ -21,6 +22,7 @@ export const PostList = ({
   const params = useParams();
   const [page, setPage] = useState(1);
   useEffect(() => {
+    console.log("useEffect")
     if (login) {
       sliceList(page);
     }
@@ -32,7 +34,7 @@ export const PostList = ({
       .then((data) => {
         setPagesCnt(Math.ceil(data.total / POSTSONPAGE));
         setPostsState(data.posts);
-        localStorage.setItem('userID', '624f266aae19f546dc083a51') // TODO: поправить временно захардкоженый userID. Сейчас необходим для корректной отработки лайков
+        // localStorage.setItem('userID', '624f266aae19f546dc083a51') // TODO: поправить временно захардкоженый userID. Сейчас необходим для корректной отработки лайков
         data.posts.forEach((el)=>{
           if (el.likes.includes(localStorage.getItem('userID'))){
             setFavorite((prevState)=>[...prevState, el._id])
@@ -90,9 +92,7 @@ export const PostList = ({
            />
            ))}
        </div>
-          <Link to='/'>
-            <Button onClick={()=>sliceList(1)}> НАЗАД</Button>
-          </Link>
+          <GoBackButton/>
            </>
          :
       <>
