@@ -22,6 +22,9 @@ import { Footer } from "./Components/Footer";
 import { EditPost } from "./Components/EditPost";
 import { CreatePost } from "./Components/CreatePost";
 import { NewPostButton } from "./Components/NewPostButton";
+import { EditUser } from './Components/EditUser';
+import { User } from './Components/User';
+
 import api from "./utils/api";
 
 import "normalize.css";
@@ -323,6 +326,10 @@ function App() {
               />: <Navigate to="/" />
             }
           />
+
+          <Route path='user/edit' element={<EditUser />} />
+          <Route path='user' element={<User />} />
+
         </Routes>
         <Footer>
           <Logo />

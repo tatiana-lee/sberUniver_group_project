@@ -172,11 +172,13 @@ const { writeLS, removeLS } = useLocalStorage();
           <div>{user?.name}</div>
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem>          
+        <LinkRoute to={'user'}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          Settings          
+          </LinkRoute>
         </MenuItem>
         <MenuItem onClick={logoutFunc}>
           <LinkRoute to={'/'}>
