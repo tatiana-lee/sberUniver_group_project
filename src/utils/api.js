@@ -6,8 +6,6 @@ const onResponce = (res) => {
 class Api {
   constructor({ url, token }) {
     this._url = url;
-    // this._token = token;
-    // localStorage.setItem("token", token);
   }
 
   getPosts(itemID) {
@@ -33,14 +31,14 @@ class Api {
 
   editPost(postID, editedPost) {
     return fetch(`${this._url}/posts/${postID}`, {
-        method: 'PATCH',
-        headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editedPost),
-    }).then(onResponce)
-}
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedPost),
+    }).then(onResponce);
+  }
 
   getPostsOnPage(pageNumber, postsOnPage) {
     return fetch(
@@ -54,7 +52,9 @@ class Api {
   }
 
   getUserInfo(userID) {
-    const requestUrl = userID ? `${this._url}/users/${userID}` : `${this._url}/users/`
+    const requestUrl = userID
+      ? `${this._url}/users/${userID}`
+      : `${this._url}/users/`;
     return fetch(requestUrl, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -100,24 +100,24 @@ class Api {
       },
     }).then(onResponce);
   }
-    search(searchQuery) {
-        return fetch(`${this._url}/posts/search/?query=${searchQuery}`, {
-          method: "GET",
-            headers: {
-                authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        }).then(onResponce);
-    }
+  search(searchQuery) {
+    return fetch(`${this._url}/posts/search/?query=${searchQuery}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then(onResponce);
+  }
 
-    addLike(itemID) {
-        return fetch(`${this._url}/posts/likes/${itemID}`, {
-            method: 'PUT',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-        }).then(onResponce);
-    }
-    
+  addLike(itemID) {
+    return fetch(`${this._url}/posts/likes/${itemID}`, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then(onResponce);
+  }
+
   deletePost(postID) {
     return fetch(`${this._url}/posts/${postID}`, {
       method: "DELETE",
@@ -140,45 +140,44 @@ class Api {
 
   signUp(userData) {
     return fetch(`${this._url}/signup`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     }).then(onResponce);
-}
+  }
 
-signIn(userData) {
+  signIn(userData) {
     return fetch(`${this._url}/signin`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     }).then(onResponce);
-}
+  }
 
-editCurentUser(updatedUserInfo) {
-  return fetch(`${this._url}/users/me`, {
-      method: 'PATCH',
+  editCurentUser(updatedUserInfo) {
+    return fetch(`${this._url}/users/me`, {
+      method: "PATCH",
       headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-          'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedUserInfo),
-  }).then(onResponce);
-}
-editCurentUserAvatar(updatedUserInfo) {
-  return fetch(`${this._url}/users/me/avatar`, {
-      method: 'PATCH',
+    }).then(onResponce);
+  }
+  editCurentUserAvatar(updatedUserInfo) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
       headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-          'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedUserInfo),
-  }).then(onResponce);
-}
-
+    }).then(onResponce);
+  }
 }
 
 export default new Api(config);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Card as CardMUI } from "@mui/material";
@@ -18,11 +18,10 @@ import { v4 as uuidv4 } from "uuid";
 import * as dayjs from "dayjs";
 import cn from "classnames";
 
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import ModalContext from "../../contexts/modalContext";
 import styles from "./style.module.css";
 import api from "../../utils/api.js";
-import { POSTSONPAGE } from "../../utils/config";
 
 import { Timeline } from "../Timeline";
 
@@ -33,7 +32,7 @@ export const PostCard = ({
   user,
   setPage,
   tagSearch,
-}) => {    
+}) => {
   const { writeLS, removeLS } = useLocalStorage();
   const [likeCount, setLikeCount] = useState(post.likes.length);
 
@@ -55,7 +54,10 @@ export const PostCard = ({
       })
       .catch(() => {
         setModalState(() => {
-          return { isOpen: true, msg: `Не удалось добавить "${post.title}" в избранное` };
+          return {
+            isOpen: true,
+            msg: `Не удалось добавить "${post.title}" в избранное`,
+          };
         });
       });
   };
@@ -110,7 +112,6 @@ export const PostCard = ({
     }
   };
 
-
   require("dayjs/locale/ru");
   return (
     <CardMUI sx={{ maxWidth: 345 }} key={uuidv4()}>
@@ -150,20 +151,18 @@ export const PostCard = ({
           Tags:
           {post.tags.map((el) => {
             return (
-              <Link to={`/search/tag_${el}`}
-                key={uuidv4()}
-              >
-              <Button
-                variant="outlined"
-                size="small"
-                sx={{ ml: "10px" }}
-                onClick={()=>{
-                  tagSearch(el);
-                }}
+              <Link to={`/search/tag_${el}`} key={uuidv4()}>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  sx={{ ml: "10px" }}
+                  onClick={() => {
+                    tagSearch(el);
+                  }}
                 >
-                {el}
-              </Button>
-                </Link>
+                  {el}
+                </Button>
+              </Link>
             );
           })}
         </Typography>
