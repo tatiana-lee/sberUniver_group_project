@@ -9,6 +9,23 @@
   display        : block;
   color          : #33393d !important;
   text-decoration: none !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.headerTitle:after {
+  content: "\02026";
+  box-sizing: content-box;
+  float: right;
+  position: absolute;
+  bottom: 5px;
+  right: 0; 
+  width: 3em;
+  margin-left: -3em;
+  padding-right: 5px;	
+  text-align: right;
+  background-size: 100% 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #e7e7e7 50%, #e7e7e7);
 }
 
 .tagsItem {
