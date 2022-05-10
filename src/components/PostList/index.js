@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { PostCard } from "../PostCard";
 import styles from "./style.module.css";
 import cn from "classnames";
 import { Pagination } from "../Pagination";
 import api from "../../utils/api.js";
 import { POSTSONPAGE } from "../../utils/config";
+import { HeaderLine } from "../HeaderLine";
 import { GoBackButton } from "../GoBackButton";
 
 export const PostList = ({
@@ -20,7 +23,6 @@ export const PostList = ({
   const params = useParams();
   const [page, setPage] = useState(1);
   useEffect(() => {
-    console.log("useEffect");
     if (login) {
       sliceList(page);
     }
@@ -70,6 +72,7 @@ export const PostList = ({
 
   return (
     <div className={cn("sectionInner", styles.cardListContainer)}>
+      <HeaderLine />
       {Object.keys(params).length ? (
         <>
           <div className={cn(styles.gridTable)}>

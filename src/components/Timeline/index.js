@@ -13,14 +13,14 @@ export const Timeline = ({ createdAt, updatedAt }) => {
       <TimelineMUI>
         <TimelineItem className={style.TimelineItemClass}>
           <TimelineSeparator>
-            <TimelineDot variant="outlined" color="primary" />
+            <TimelineDot variant="outlined" className={style.first} />
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent>Создан: {createdAt}</TimelineContent>
         </TimelineItem>
         <TimelineItem className={style.TimelineItemClass}>
           <TimelineSeparator>
-            <TimelineDot variant="outlined" color="secondary" />
+            <TimelineDot variant="outlined" className={style.last} />
           </TimelineSeparator>
           <TimelineContent>Последнее изменение: {updatedAt}</TimelineContent>
         </TimelineItem>

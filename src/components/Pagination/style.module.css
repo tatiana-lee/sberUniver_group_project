@@ -13,6 +13,16 @@
   justify-content: center;
 }
 
+.paginationWrap ul button {
+  background-color: #ffcd24;
+  color           : #33393d;
+}
+
+.paginationWrap ul button:hover {
+  background-color: #bb961c;
+}
+
+
 @media screen and (max-width: 576px) {
   .paginationWrap ul button {
     min-width: 25px;

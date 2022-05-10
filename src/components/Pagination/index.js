@@ -1,6 +1,7 @@
 import React from "react";
 import { Pagination as PaginationMUI } from "@mui/material";
 
+import "./style.css";
 import styles from "./style.module.css";
 import cn from "classnames";
 

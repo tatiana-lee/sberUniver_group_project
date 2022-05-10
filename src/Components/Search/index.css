@@ -22,7 +22,7 @@
 }
 
 .search__input::placeholder {
-	color: #8a20ad;
+	color: #33393d;
 }
 
 .search__btn {
@@ -38,11 +38,11 @@
 }
 
 .search__btn svg {
-	fill: #7B8E98;
+	fill: #33393d;
 }
 
 .search__btn:hover svg {
-	fill: #FEBA0C;
+	fill: #bb961c;
 }
 
 @media (max-width: 350px) {

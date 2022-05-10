@@ -1,4 +1,17 @@
+.card {
+  box-shadow      : 0px 0px 8px 8px rgba(34, 60, 80, 0.23) !important;
+  background-color: #e7e7e7 !important;
+}
+
 .headerTitle {
-  height: 45px;
-  display: block;
+  height         : 45px;
+  font-weight    : bold;
+  display        : block;
+  color          : #33393d !important;
+  text-decoration: none !important;
+}
+
+.tagsItem {
+  color          : #9dc8e4 !important;
+  text-decoration: none !important;
 }

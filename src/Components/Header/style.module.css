@@ -1,7 +1,7 @@
 .header {
 	width           : 100%;
 	padding         : 10px 0;
-	background-color: bisque;
+	background-color: #2aabe4;
 }
 
 .header_wrapper {
@@ -11,10 +11,11 @@
 	gap            : 40px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 640px) {
 	.header_wrapper {
-		flex-direction: column;
-		align-items   : stretch;
-		gap           : 60px;
+		position   : relative;
+		align-items: flex-end;
+		height     : 120px;
+
 	}
 }

@@ -8,6 +8,10 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Tooltip from "@mui/material/Tooltip";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import SnippetFolderIcon from "@mui/icons-material/SnippetFolder";
+import style from "./style.module.css";
+import PersonIcon from "@mui/icons-material/Person";
 
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
@@ -67,7 +71,6 @@ export default function Info({ user, setPostsState, setFavorite }) {
         api
           .getMeInfo()
           .then((data_user) => {
-            console.log(data_posts, data_user);
             let myPosts = [];
             data_posts.forEach((el) => {
               if (el.author._id === data_user._id) {
@@ -86,7 +89,6 @@ export default function Info({ user, setPostsState, setFavorite }) {
   };
 
   const logoutFunc = () => {
-    console.log("Click LogoutBtn!");
     localStorage.setItem("token", "");
     localStorage.setItem("userID", "");
     setLogin(false);
@@ -94,27 +96,46 @@ export default function Info({ user, setPostsState, setFavorite }) {
 
   return login ? (
     <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+      <Box
+        className={style.wrap}
+        sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
+      >
         <Link
           href="https://github.com/sopel1996/sberUniver_group_project"
           sx={{ mr: "10px" }}
         >
-          <IconButton aria-label="GitHub">
+          <IconButton className={style.headerBtns} aria-label="GitHub">
             <GitHubIcon />
           </IconButton>
         </Link>
 
-        <LinkRoute to={`/post/my_posts`}>
-          <IconButton onClick={() => myPosts()} size="small" sx={{ ml: 2 }}>
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-          </IconButton>
-        </LinkRoute>
-        <LinkRoute to={`/post/my_favorite`}>
-          <IconButton onClick={() => myFavorite()} size="small" sx={{ ml: 2 }}>
-            <Avatar sx={{ width: 32, height: 32 }}>F</Avatar>
-          </IconButton>
-        </LinkRoute>
-        <Tooltip title="Account settings">
+        <Tooltip title="Мои посты">
+          <LinkRoute to={`/post/my_posts`}>
+            <IconButton
+              className={style.headerBtns}
+              onClick={() => myPosts()}
+              size="small"
+              sx={{ ml: 2 }}
+            >
+              <SnippetFolderIcon />
+            </IconButton>
+          </LinkRoute>
+        </Tooltip>
+
+        <Tooltip title="Избранные посты">
+          <LinkRoute to={`/post/my_favorite`}>
+            <IconButton
+              className={style.headerBtns}
+              onClick={() => myFavorite()}
+              size="small"
+              sx={{ ml: 2 }}
+            >
+              <FavoriteIcon />
+            </IconButton>
+          </LinkRoute>
+        </Tooltip>
+
+        <Tooltip title="Аккаунт">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -123,7 +144,7 @@ export default function Info({ user, setPostsState, setFavorite }) {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>
+            <Avatar sx={{ width: 32, height: 32 }} className={style.headerBtns}>
               {user?.name.slice(0, 1)}
             </Avatar>
           </IconButton>
@@ -164,25 +185,25 @@ export default function Info({ user, setPostsState, setFavorite }) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <MenuItem className={style.userName}>
           <Avatar />
           <div>{user?.name}</div>
         </MenuItem>
         <Divider />
         <MenuItem>
-          <LinkRoute to={"user"}>
+          <LinkRoute to={"user"} className={style.link}>
             <ListItemIcon>
-              <Settings fontSize="small" />
+              <PersonIcon fontSize="small" />
             </ListItemIcon>
-            Settings
+            Аккаунт
           </LinkRoute>
         </MenuItem>
         <MenuItem onClick={logoutFunc}>
-          <LinkRoute to={"/"}>
+          <LinkRoute to={"/"} className={style.link}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            Logout
+            Выйти
           </LinkRoute>
         </MenuItem>
       </Menu>

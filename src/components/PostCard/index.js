@@ -114,7 +114,7 @@ export const PostCard = ({
 
   require("dayjs/locale/ru");
   return (
-    <CardMUI sx={{ maxWidth: 345 }} key={uuidv4()}>
+    <CardMUI sx={{ maxWidth: 345 }} key={uuidv4()} className={styles.card}>
       <CardHeader
         avatar={
           <Avatar
@@ -151,7 +151,11 @@ export const PostCard = ({
           Tags:
           {post.tags.map((el) => {
             return (
-              <Link to={`/search/tag_${el}`} key={uuidv4()}>
+              <Link
+                to={`/search/tag_${el}`}
+                key={uuidv4()}
+                className={styles.tagsItem}
+              >
                 <Button
                   variant="outlined"
                   size="small"

@@ -18,7 +18,6 @@ import { Search } from "./Components/Search";
 import { Footer } from "./Components/Footer";
 import { EditPost } from "./Components/EditPost";
 import { CreatePost } from "./Components/CreatePost";
-import { NewPostButton } from "./Components/NewPostButton";
 import { EditUser } from "./Components/EditUser";
 import { User } from "./Components/User";
 
@@ -56,12 +55,9 @@ function App() {
   };
 
   const signUp = () => {
-    console.log("signUp");
-
     api
       .signUp({ email, password })
       .then((createdUser) => {
-        console.log({ createdUser });
         return api.signIn({ email, password });
       })
       .then((data) => {
@@ -83,7 +79,6 @@ function App() {
   };
 
   const signIn = () => {
-    console.log("signIn");
     api
       .signIn({ email, password })
       .then((data) => {
@@ -146,7 +141,7 @@ function App() {
               setFavorite={setFavorite}
             />
           </Header>
-          <NewPostButton />
+          {/* <NewPostButton /> */}
           <Routes>
             <Route
               path="/"
@@ -154,43 +149,65 @@ function App() {
                 <>
                   {!login ? (
                     <div className="content__cards">
-                      <Typography>Войти</Typography>
+                      <Typography marginBottom="20px" class="title">
+                        Войти
+                      </Typography>
                       <Grid container flexDirection="column" spacing="10">
-                        <TextField
-                          fullWidth
-                          label="Email"
-                          variant="outlined"
-                          required
-                          value={email}
-                          onChange={handleEmailChange}
-                        />
-                        <TextField
-                          fullWidth
-                          label="Password"
-                          type="password"
-                          variant="outlined"
-                          required
-                          value={password}
-                          onChange={handlePasswordChange}
-                        />
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          size="small"
-                          onClick={() => signIn()}
-                        >
-                          Войти
-                        </Button>
-                        <Link to={"registration"} style={styleBtn}>
+                        <Grid item marginBottom="20px">
+                          <TextField
+                            fullWidth
+                            label="Email"
+                            variant="outlined"
+                            required
+                            value={email}
+                            onChange={handleEmailChange}
+                            className="field"
+                          />
+                        </Grid>
+                        <Grid item marginBottom="20px">
+                          <TextField
+                            fullWidth
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                            required
+                            value={password}
+                            onChange={handlePasswordChange}
+                            marginBottom="20px"
+                            className="field"
+                          />
+                        </Grid>
+                        <Grid item marginBottom="20px">
                           <Button
                             type="submit"
                             variant="contained"
                             size="small"
-                            style={styleBtn}
+                            onClick={() => signIn()}
+                            marginBottom="20px"
+                            fullWidth
+                            className="Btn"
                           >
-                            Регистрация
+                            Войти
                           </Button>
-                        </Link>
+                        </Grid>
+                        <Grid item marginBottom="20px">
+                          <Link
+                            to={"registration"}
+                            style={styleBtn}
+                            marginBottom="20px"
+                            className="Link"
+                          >
+                            <Button
+                              type="submit"
+                              variant="contained"
+                              size="small"
+                              style={styleBtn}
+                              className="Btn"
+                            >
+                              Регистрация
+                            </Button>
+                          </Link>
+                        </Grid>
                       </Grid>
                     </div>
                   ) : (
@@ -205,33 +222,45 @@ function App() {
                 <>
                   {!login ? (
                     <div className="content__cards">
-                      <Typography>Регистрация</Typography>
+                      <Typography marginBottom="20px" class="title">
+                        Регистрация
+                      </Typography>
                       <Grid container flexDirection="column" spacing="10">
-                        <TextField
-                          fullWidth
-                          label="Email"
-                          variant="outlined"
-                          required
-                          value={email}
-                          onChange={handleEmailChange}
-                        />
-                        <TextField
-                          fullWidth
-                          label="Password"
-                          type="password"
-                          variant="outlined"
-                          required
-                          value={password}
-                          onChange={handlePasswordChange}
-                        />
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          size="small"
-                          onClick={() => signUp()}
-                        >
-                          Зарегистрироваться
-                        </Button>
+                        <Grid item marginBottom="20px">
+                          <TextField
+                            fullWidth
+                            className="field"
+                            label="Email"
+                            variant="outlined"
+                            required
+                            value={email}
+                            onChange={handleEmailChange}
+                          />
+                        </Grid>
+                        <Grid item marginBottom="20px">
+                          <TextField
+                            fullWidth
+                            className="field"
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                            required
+                            value={password}
+                            onChange={handlePasswordChange}
+                          />
+                        </Grid>
+                        <Grid item marginBottom="20px">
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            size="small"
+                            fullWidth
+                            className="Btn"
+                            onClick={() => signUp()}
+                          >
+                            Зарегистрироваться
+                          </Button>
+                        </Grid>
                       </Grid>
                     </div>
                   ) : (
@@ -274,7 +303,7 @@ function App() {
               }
             />
             <Route
-              path="posts/create"
+              path="all_posts/create"
               element={
                 login ? (
                   <CreatePost setPostsState={setPostsState} />

@@ -1,0 +1,8 @@
+@media screen and (max-width: 640px) {
+
+    .backBtn {
+        position: absolute;
+        bottom  : 0;
+        left    : 20px;
+    }
+}

@@ -14,15 +14,16 @@
   margin               : 0 0 20px 0;
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
   .gridTable {
     grid-template-columns: repeat(2, 320px);
   }
-  
+
 }
-@media screen and (max-width: 670px){
+
+@media screen and (max-width: 670px) {
   .gridTable {
     grid-template-columns: repeat(1, 320px);
   }
-  
+
 }
