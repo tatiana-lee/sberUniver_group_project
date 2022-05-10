@@ -1,0 +1,27 @@
+.headerBtns {
+	background-color: #9dc8e4 !important;
+	color           : #33393d !important;
+	width           : 34px;
+	height          : 34px;
+}
+
+.headerBtns svg {
+	color: #33393d !important;
+}
+
+.link {
+	text-decoration: none !important;
+	color          : #33393d !important;
+}
+
+.userName:hover {
+	background-color: transparent;
+}
+
+@media screen and (max-width: 640px) {
+	.wrap {
+		position: absolute;
+		top     : 0;
+		right   : 20px;
+	}
+}

@@ -1,0 +1,24 @@
+.userWrapper {
+    align-items: center !important;
+}
+
+.editLink {
+    text-decoration: none;
+    color          : #33393d !important;
+}
+
+.editBtn {
+    background-color: #ffcd24 !important;
+    color           : #33393d !important;
+}
+
+.gridItem {
+    width     : 100%;
+    text-align: center;
+}
+
+.gridItem img {
+
+    width : 320px;
+    height: 450px;
+}

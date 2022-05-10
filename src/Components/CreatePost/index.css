@@ -1,0 +1,41 @@
+.addPost {
+    width          : 100%;
+    height         : 100%;
+    display        : flex;
+    justify-content: center;
+    position       : relative;
+}
+
+.createpost {
+    padding      : 20px;
+    border-radius: 5px;
+    width        : 100%;
+}
+
+.gridWrap {
+    flex-direction: row !important;
+    width         : 100%;
+    height        : 100%;
+}
+
+.formPost {
+    width         : 100%;
+    height        : 100%;
+    flex-direction: column !important;
+    flex-wrap     : nowrap !important;
+}
+
+.createBtn {
+    background-color: #ffcd24 !important;
+    color           : #33393d !important;
+}
+
+.postImgWrapper,
+.formPost {
+    width: 100% !important;
+}
+
+.postImg {
+    width : 100%;
+    height: 500px;
+}

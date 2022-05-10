@@ -1,0 +1,11 @@
+.TimelineItemClass:before {
+    content: none !important;
+}
+
+.first {
+    border-color: #9dc8e4 !important;
+}
+
+.last {
+    border-color: #ffcd24 !important;
+}

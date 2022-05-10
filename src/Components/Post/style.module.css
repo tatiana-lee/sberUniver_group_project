@@ -1,0 +1,12 @@
+.card {
+  background-color: #efefef !important;
+  color           : '#33393d' !important;
+  width           : 100%;
+}
+
+.postImg {
+  width     : 100% !important;
+  height    : auto !important;
+  object-fit: contain !important;
+
+}
