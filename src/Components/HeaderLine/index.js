@@ -11,7 +11,7 @@ export const HeaderLine = ({ title, children }) => {
         {children}
 
         <Typography variant="h3" component="h3">
-          {title ? title : "Тут будет заголовок"}
+          {title ? title : "Добро пожаловать! Почитаем посты?"}
         </Typography>
 
         <NewPostButton />
