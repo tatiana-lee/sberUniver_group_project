@@ -14,13 +14,14 @@
 }
 
 .headerTitle:after {
-  content: "\02026";
+  content: "";
   box-sizing: content-box;
   float: right;
   position: absolute;
   bottom: 5px;
   right: 0; 
   width: 3em;
+  height: 16px;
   margin-left: -3em;
   padding-right: 5px;	
   text-align: right;
