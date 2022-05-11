@@ -393,8 +393,8 @@ function App() {
               }
             />
 
-            <Route path="user/edit" element={<EditUser />} />
-            <Route path="user" element={<User />} />
+            <Route path="user/edit" element={login ? <EditUser />: <Navigate to="/" />} />
+            <Route path="user" element={login ? <User />: <Navigate to="/" />} />
           </Routes>
           <Footer>
             <Logo />
