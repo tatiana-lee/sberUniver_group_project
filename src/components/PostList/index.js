@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import { PostCard } from "../PostCard";
@@ -9,6 +9,7 @@ import api from "../../utils/api.js";
 import { POSTSONPAGE } from "../../utils/config";
 import { HeaderLine } from "../HeaderLine";
 import { GoBackButton } from "../GoBackButton";
+import PageContext from "../../contexts/PageContext";
 
 export const PostList = ({
   list,
@@ -20,13 +21,16 @@ export const PostList = ({
   setPagesCnt,
   setPostsState,
 }) => {
-  const params = useParams();
-  const [page, setPage] = useState(1);
+  const params = useParams();  
+  const { page, setPage, update, setFlag } = useContext(PageContext);
   useEffect(() => {
     if (login) {
-      sliceList(page);
+      if(update){
+        sliceList(page);
+        setFlag(false);
+      }
     }
-  }, [page, login]);
+  }, [page, login, update]);
 
   const sliceList = (el) => {
     api
@@ -83,7 +87,6 @@ export const PostList = ({
                 isInFavorite={favorite.includes(item._id)}
                 setFavorite={setFavorite}
                 user={user}
-                setPage={setPage}
                 setPostsState={setPostsState}
                 setPagesCnt={setPagesCnt}
                 tagSearch={tagSearch}
@@ -102,7 +105,6 @@ export const PostList = ({
                 isInFavorite={favorite.includes(item._id)}
                 setFavorite={setFavorite}
                 user={user}
-                setPage={setPage}
                 setPostsState={setPostsState}
                 setPagesCnt={setPagesCnt}
                 tagSearch={tagSearch}
@@ -110,7 +112,7 @@ export const PostList = ({
             ))}
           </div>
 
-          <Pagination pagesCnt={pagesCnt} setPage={setPage} page={page} />
+          <Pagination pagesCnt={pagesCnt} />
         </>
       )}
     </div>
