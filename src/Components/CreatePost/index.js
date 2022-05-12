@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import api from "../../utils/api";
 import "./index.css";
 import placeholder from "../../../public/assets/placeholder.png";
-
+import ModalContext from "../../contexts/modalContext";
 export const CreatePost = ({ setPostsState }) => {
   const navigate = useNavigate();
   const [postImg, setPostImg] = useState("");
-
+  const { setModalState } = useContext(ModalContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     const {
