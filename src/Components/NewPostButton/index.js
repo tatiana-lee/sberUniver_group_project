@@ -17,7 +17,7 @@ export const NewPostButton = () => {
   const { login, setLogin } = useContext(UserContext);
   return login ? (
     <Stack spacing={2} direction="row" className={style.newPostBtn}>
-      <Link to="create" style={textDecor}>
+      <Link to="/all_posts/create" style={textDecor}>
         <Button variant="contained" style={styleBtn}>
           Новый пост
         </Button>
