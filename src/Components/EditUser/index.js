@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import api from "../../utils/api";
 import { Link as LinkRoute } from "react-router-dom";
-// import { HeaderLine } from "../HeaderLine";
 import "./index.css";
 
 import UserContext from "../../contexts/UserContext";
@@ -37,7 +36,6 @@ export const EditUser = () => {
 
   return (
     <div className="sectionInner">
-      {/* <HeaderLine/> */}
       <Grid
         container
         flexDirection="column"

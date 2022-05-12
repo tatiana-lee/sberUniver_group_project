@@ -25,8 +25,12 @@ import api from "./utils/api";
 
 import "normalize.css";
 import "./App.css";
+import PageContext from "./contexts/PageContext";
 
 function App() {
+  const [page, setPage] = useState(1);
+  const [update, setFlag] = useState(true);
+
   const [postsState, setPostsState] = useState([]);
   const [pagesCnt, setPagesCnt] = useState(1);
   const [login, setLogin] = useState(
@@ -125,6 +129,7 @@ function App() {
   };
 
   return (
+    <PageContext.Provider value={{ page, setPage, update, setFlag }}>
     <UserContext.Provider value={{ user, setUser, login, setLogin }}>
       <ModalContext.Provider value={{ modalState, setModalState }}>
         <Modal />
@@ -141,7 +146,6 @@ function App() {
               setFavorite={setFavorite}
             />
           </Header>
-          {/* <NewPostButton /> */}
           <Routes>
             <Route
               path="/"
@@ -389,8 +393,8 @@ function App() {
               }
             />
 
-            <Route path="user/edit" element={<EditUser />} />
-            <Route path="user" element={<User />} />
+            <Route path="user/edit" element={login ? <EditUser />: <Navigate to="/" />} />
+            <Route path="user" element={login ? <User />: <Navigate to="/" />} />
           </Routes>
           <Footer>
             <Logo />
@@ -398,6 +402,7 @@ function App() {
         </div>
       </ModalContext.Provider>
     </UserContext.Provider>
+    </PageContext.Provider>
   );
 }
 

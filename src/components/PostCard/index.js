@@ -24,15 +24,15 @@ import styles from "./style.module.css";
 import api from "../../utils/api.js";
 
 import { Timeline } from "../Timeline";
-
+import PageContext from "../../contexts/PageContext";
 export const PostCard = ({
   post,
   isInFavorite,
   setFavorite,
   user,
-  setPage,
   tagSearch,
-}) => {
+}) => {    
+  const { setPage } = useContext(PageContext);
   const { writeLS, removeLS } = useLocalStorage();
   const [likeCount, setLikeCount] = useState(post.likes.length);
 
