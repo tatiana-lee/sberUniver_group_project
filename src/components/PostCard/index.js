@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Card as CardMUI } from "@mui/material";
 import CardHeader from "@mui/material/CardHeader";
@@ -13,7 +13,6 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Button from "@mui/material/Button";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-
 import { v4 as uuidv4 } from "uuid";
 import * as dayjs from "dayjs";
 import cn from "classnames";
@@ -31,8 +30,9 @@ export const PostCard = ({
   setFavorite,
   user,
   tagSearch,
-}) => {    
-  const { setPage } = useContext(PageContext);
+}) => {     
+  const navigate = useNavigate(); 
+  const { setPage, setFlag } = useContext(PageContext);
   const { writeLS, removeLS } = useLocalStorage();
   const [likeCount, setLikeCount] = useState(post.likes.length);
 
@@ -92,6 +92,7 @@ export const PostCard = ({
       api.deletePost(post._id).then((res) => {
         if (res.ok) {
           setPage(1);
+          setFlag(true)
           setModalState(() => {
             return {
               isOpen: true,
@@ -101,6 +102,7 @@ export const PostCard = ({
         } else {
           return Promise.reject(`Ошибка : ${res.status}`);
         }
+        navigate("/");
       });
     } else {
       setModalState(() => {
